@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalKirana - Hyperlocal Marketplace</title>
+  <!-- Tailwind CSS CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <!-- HEADER / NAVBAR -->
+  <header class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-2xl">🏪</span>
+        <h1 class="text-xl font-bold tracking-wide">LocalKirana</h1>
+      </div>
+      
+      <!-- Navigation Tabs -->
+      <nav class="flex space-x-2 bg-emerald-700 p-1 rounded-lg">
+        <button id="nav-customer" onclick="switchView('customer')" class="px-4 py-1.5 text-sm font-semibold rounded-md bg-white text-emerald-800 shadow">
+          Customer View
+        </button>
+        <button id="nav-merchant" onclick="switchView('merchant')" class="px-4 py-1.5 text-sm font-semibold rounded-md text-white hover:bg-emerald-600">
+          Store Owner Dashboard
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= CUSTOMER VIEW ================= -->
+  <main id="view-customer" class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+    
+    <!-- Local Ad Banner Section -->
+    <div id="ad-banner-container" class="mb-6 rounded-xl overflow-hidden bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 shadow-md flex justify-between items-center">
+      <div>
+        <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">Promoted Ad</span>
+        <h2 id="banner-title" class="text-2xl font-bold mt-1">Gupta General Store</h2>
+        <p id="banner-desc" class="text-sm opacity-90 mt-1">Special Offer: Free delivery on orders over ₹200! Fresh stock daily.</p>
+      </div>
+      <a id="banner-phone" href="tel:+919876543210" class="bg-white text-orange-600 font-bold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+        📞 Call Shop
+      </a>
+    </div>
+
+    <!-- Store Info & Filter Bar -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between bg-white p-4 rounded-xl shadow-sm mb-6 border">
+      <div>
+        <h3 class="text-lg font-bold text-gray-900">Nearby Store: <span class="text-emerald-600">Gupta Kirana & General Store</span></h3>
+        <p class="text-xs text-gray-500">📍 Sector 14, Main Market | 🕒 Delivers in 20-30 mins | Phone: +91 98765 43210</p>
+      </div>
+      <div class="mt-3 md:mt-0 flex gap-2">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+          ● Open Now
+        </span>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          🚚 Self Delivery / Porter
+        </span>
+      </div>
+    </div>
+
+    <!-- Products & Cart Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Products List -->
+      <div class="lg:col-span-2">
+        <h3 class="font-bold text-lg mb-4 text-gray-800">Available Products</h3>
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Dynamic products injected here by JS -->
+        </div>
+      </div>
+
+      <!-- Cart Sidebar -->
+      <div class="bg-white p-5 rounded-xl border shadow-sm h-fit sticky top-20">
+        <h3 class="font-bold text-lg mb-3 border-b pb-2 flex justify-between items-center">
+          <span>Your Cart</span>
+          <span id="cart-count" class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">0 items</span>
+        </h3>
+
+        <div id="cart-items" class="space-y-3 max-h-60 overflow-y-auto my-3 text-sm divide-y">
+          <p class="text-gray-400 text-center py-4">Your cart is empty.</p>
+        </div>
+
+        <div class="border-t pt-3 space-y-2">
+          <div class="flex justify-between font-bold text-base">
+            <span>Total Amount:</span>
+            <span>₹<span id="cart-total">0</span></span>
+          </div>
+
+          <!-- Checkout Options -->
+          <div class="pt-3 space-y-2">
+            <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg shadow flex items-center justify-center gap-2 transition">
+              <span>📱 Order via WhatsApp</span>
+            </button>
+            <a href="tel:+919876543210" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 rounded-lg border flex items-center justify-center gap-2 transition text-sm">
+              <span>📞 Call Store Directly</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= STORE OWNER DASHBOARD ================= -->
+  <main id="view-merchant" class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full hidden">
+    
+    <div class="bg-white p-4 rounded-xl border shadow-sm mb-6 flex justify-between items-center">
+      <div>
+        <h2 class="text-xl font-bold text-gray-900">Merchant Portal</h2>
+        <p class="text-xs text-gray-500">Manage your store products, promotional banner, and store contact info.</p>
+      </div>
+      <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold">Store ID: #KIRANA-102</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Product Management Form -->
+      <div class="bg-white p-5 rounded-xl border shadow-sm">
+        <h3 class="font-bold text-lg mb-4 text-emerald-700 border-b pb-2">➕ Add New Product</h3>
+        <form id="add-product-form" onsubmit="handleAddProduct(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Product Name</label>
+            <input type="text" id="prod-name" required placeholder="e.g. Amul Butter 100g" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Price (₹)</label>
+              <input type="number" id="prod-price" required placeholder="56" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Category</label>
+              <select id="prod-cat" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option>Dairy & Bakery</option>
+                <option>Staples & Rice</option>
+                <option>Snacks & Munchies</option>
+                <option>Beverages</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Image URL (Optional)</label>
+            <input type="url" id="prod-img" placeholder="https://..." class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg shadow transition">
+            Publish Product
+          </button>
+        </form>
+      </div>
+
+      <!-- Banner Ads & Promotions Manager -->
+      <div class="bg-white p-5 rounded-xl border shadow-sm">
+        <h3 class="font-bold text-lg mb-4 text-amber-600 border-b pb-2">📢 Update Store Banner & Ads</h3>
+        <form id="ad-form" onsubmit="handleUpdateAd(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Store Heading / Title</label>
+            <input type="text" id="ad-title-input" required value="Gupta General Store" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Promotional Text / Offer</label>
+            <textarea id="ad-desc-input" rows="3" required class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">Special Offer: Free delivery on orders over ₹200! Fresh stock daily.</textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Store Phone Number (WhatsApp)</label>
+            <input type="tel" id="ad-phone-input" required value="+919876543210" class="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-lg shadow transition">
+            Save Banner Announcement
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-400 text-xs py-4 text-center mt-auto border-t border-gray-700">
+    <p>School Project: Hyperlocal Kirana Marketplace Prototype | Empowering Local Businesses</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Initial Mock Inventory
+    let products = [
+      { id: 1, name: "Aashirvaad Shudh Atta (5kg)", price: 245, category: "Staples & Rice", img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=300&q=80" },
+      { id: 2, name: "Amul Taaza Toned Milk (1L)", price: 54, category: "Dairy & Bakery", img: "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=300&q=80" },
+      { id: 3, name: "Fortune Sunflower Oil (1L)", price: 135, category: "Staples & Rice", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=300&q=80" },
+      { id: 4, name: "Lays Potato Chips (Blue)", price: 20, category: "Snacks & Munchies", img: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=300&q=80" }
+    ];
+
+    let cart = [];
+    let merchantPhone = "919876543210"; // Default phone format for WhatsApp API
+
+    // Render Products on Frontend
+    function renderProducts() {
+      const container = document.getElementById('product-grid');
+      container.innerHTML = products.map(p => `
+        <div class="bg-white border rounded-xl p-3 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+          <img src="${p.img}" alt="${p.name}" class="h-28 w-full object-cover rounded-lg mb-2">
+          <div>
+            <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded uppercase font-bold">${p.category}</span>
+            <h4 class="font-bold text-sm text-gray-800 mt-1">${p.name}</h4>
+            <p class="text-emerald-700 font-extrabold text-base mt-1">₹${p.price}</p>
+          </div>
+          <button onclick="addToCart(${p.id})" class="mt-3 w-full bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white font-bold py-1.5 rounded-lg border border-emerald-200 text-sm transition">
+            + Add to Cart
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Cart Functions
+    function addToCart(productId) {
+      const item = products.find(p => p.id === productId);
+      const existing = cart.find(c => c.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+      updateCartUI();
+    }
+
+    function changeQty(productId, delta) {
+      const item = cart.find(c => c.id === productId);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) {
+          cart = cart.filter(c => c.id !== productId);
+        }
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartContainer = document.getElementById('cart-items');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotal = document.getElementById('cart-total');
+
+      const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
+      const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+      cartCount.innerText = `${totalItems} items`;
+      cartTotal.innerText = totalPrice;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `<p class="text-gray-400 text-center py-4">Your cart is empty.</p>`;
+        return;
+      }
+
+      cartContainer.innerHTML = cart.map(i => `
+        <div class="flex justify-between items-center pt-2">
+          <div>
+            <p class="font-semibold text-gray-800">${i.name}</p>
+            <p class="text-xs text-gray-500">₹${i.price} × ${i.qty} = ₹${i.price * i.qty}</p>
+          </div>
+          <div class="flex items-center space-x-1">
+            <button onclick="changeQty(${i.id}, -1)" class="px-2 py-0.5 bg-gray-200 rounded hover:bg-gray-300 font-bold">-</button>
+            <span class="text-xs px-1">${i.qty}</span>
+            <button onclick="changeQty(${i.id}, 1)" class="px-2 py-0.5 bg-gray-200 rounded hover:bg-gray-300 font-bold">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // WhatsApp Direct Order Action
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        alert("Please add items to your cart first!");
+        return;
+      }
+
+      let orderText = "Hello Gupta Kirana Store! I would like to place an order:\n\n";
+      cart.forEach((item, index) => {
+        orderText += `${index + 1}. ${item.name} x ${item.qty} = ₹${item.price * item.qty}\n`;
+      });
+      
+      const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+      orderText += `\n*Total Order Amount: ₹${totalPrice}*\n\nPlease confirm availability and delivery status!`;
+
+      // Encodes string for browser URL format
+      const encodedText = encodeURIComponent(orderText);
+      const whatsappUrl = `https://wa.me/${merchantPhone}?text=${encodedText}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Merchant Add Product
+    function handleAddProduct(e) {
+      e.preventDefault();
+      const name = document.getElementById('prod-name').value;
+      const price = Number(document.getElementById('prod-price').value);
+      const category = document.getElementById('prod-cat').value;
+      let img = document.getElementById('prod-img').value;
+
+      if (!img) {
+        img = "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=300&q=80";
+      }
+
+      const newProduct = { id: Date.now(), name, price, category, img };
+      products.unshift(newProduct);
+      
+      renderProducts();
+      document.getElementById('add-product-form').reset();
+      alert("Product added successfully to customer storefront!");
+    }
+
+    // Merchant Update Ad Banner
+    function handleUpdateAd(e) {
+      e.preventDefault();
+      const title = document.getElementById('ad-title-input').value;
+      const desc = document.getElementById('ad-desc-input').value;
+      const phone = document.getElementById('ad-phone-input').value;
+
+      document.getElementById('banner-title').innerText = title;
+      document.getElementById('banner-desc').innerText = desc;
+      
+      // Clean up phone for tel & WhatsApp link
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      merchantPhone = cleanPhone;
+      document.getElementById('banner-phone').href = `tel:+${cleanPhone}`;
+
+      alert("Banner announcement updated on customer view!");
+    }
+
+    // Navigation Switcher
+    function switchView(view) {
+      const custView = document.getElementById('view-customer');
+      const merchView = document.getElementById('view-merchant');
+      const navCust = document.getElementById('nav-customer');
+      const navMerch = document.getElementById('nav-merchant');
+
+      if (view === 'customer') {
+        custView.classList.remove('hidden');
+        merchView.classList.add('hidden');
+        
+        navCust.className = "px-4 py-1.5 text-sm font-semibold rounded-md bg-white text-emerald-800 shadow";
+        navMerch.className = "px-4 py-1.5 text-sm font-semibold rounded-md text-white hover:bg-emerald-600";
+      } else {
+        merchView.classList.remove('hidden');
+        custView.classList.add('hidden');
+
+        navMerch.className = "px-4 py-1.5 text-sm font-semibold rounded-md bg-white text-emerald-800 shadow";
+        navCust.className = "px-4 py-1.5 text-sm font-semibold rounded-md text-white hover:bg-emerald-600";
+      }
+    }
+
+    // Initial Load
+    renderProducts();
+  </script>
+</body>
+</html>
